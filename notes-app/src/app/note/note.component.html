@@ -1,6 +1,7 @@
-<div class="note">
+<!-- src/app/note/note.component.html -->
+<div class="note-card">
   <h3>{{ note.title }}</h3>
   <p>{{ note.content }}</p>
-  <button (click)="editNote()">Edit</button>
-  <button (click)="deleteNote()">Delete</button>
+  <button (click)="edit()">Edit</button>
+  <button (click)="delete()">Delete</button>
 </div>

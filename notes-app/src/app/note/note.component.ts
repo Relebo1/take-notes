@@ -15,11 +15,11 @@ export class NoteComponent {
   @Output() onEdit = new EventEmitter<Note>();
   @Output() onDelete = new EventEmitter<number>();
 
-  editNote() {
+  edit() {
     this.onEdit.emit(this.note);
   }
 
-  deleteNote() {
+  delete() {
     this.onDelete.emit(this.note.id!);
   }
 }
