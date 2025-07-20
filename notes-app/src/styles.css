@@ -1,0 +1,161 @@
+/* --- Container --- */
+:host {
+  display: block;
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  background: #fefefe;
+}
+
+/* --- Note Form --- */
+.note-form {
+  background: #fff;
+  padding: 1.75rem 2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.note-form:hover {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+}
+
+.note-form input[type="text"],
+.note-form textarea {
+  border: 1.8px solid #ddd;
+  border-radius: 0.75rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  resize: vertical;
+  font-family: inherit;
+  color: #333;
+}
+
+.note-form input[type="text"]:focus,
+.note-form textarea:focus {
+  border-color: #6366f1; /* Indigo */
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.35);
+  outline: none;
+}
+
+.note-form textarea {
+  min-height: 120px;
+  line-height: 1.4;
+}
+
+.note-form button {
+  align-self: flex-end;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 1.25rem;
+  padding: 0.65rem 2rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.note-form button:hover {
+  background: #4f46e5;
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.5);
+}
+
+/* --- Notes List --- */
+.notes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- Single Note Card --- */
+app-note {
+  display: block;
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: default;
+}
+
+app-note:hover {
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
+  transform: translateY(-5px);
+}
+
+/* You can style inside the note component too, but here is a simple approach for note title/content */
+
+.note-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.4rem;
+  color: #1e293b; /* slate-800 */
+  user-select: text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-content {
+  font-weight: 400;
+  font-size: 1rem;
+  color: #475569; /* slate-600 */
+  user-select: text;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  max-height: 6.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Buttons inside note --- */
+.note-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.note-actions button {
+  background: #e0e7ff; /* indigo-100 */
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  color: #4f46e5; /* indigo-600 */
+  cursor: pointer;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.note-actions button:hover {
+  background: #c7d2fe; /* indigo-300 */
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.35);
+}
+
+.note-actions button.delete {
+  background: #fee2e2; /* red-100 */
+  color: #b91c1c; /* red-700 */
+}
+
+.note-actions button.delete:hover {
+  background: #fecaca; /* red-300 */
+  box-shadow: 0 4px 15px rgba(185, 28, 28, 0.5);
+}
+
+/* --- Responsive --- */
+@media (max-width: 400px) {
+  .note-form button {
+    width: 100%;
+  }
+}

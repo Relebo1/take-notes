@@ -1,0 +1,16 @@
+<div class="note-form">
+  <input type="text" [(ngModel)]="title" placeholder="Note Title" />
+  <textarea [(ngModel)]="content" placeholder="Your note..."></textarea>
+  <button (click)="saveNote()">
+    {{ editingNoteId ? 'Update Note' : 'Add Note' }}
+  </button>
+</div>
+
+<div class="notes-list">
+  <app-note 
+    *ngFor="let note of notes" 
+    [note]="note" 
+    (onEdit)="editNote($event)" 
+    (onDelete)="deleteNote($event)">
+  </app-note>
+</div>
