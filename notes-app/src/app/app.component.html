@@ -1,4 +1,5 @@
 <div class="note-form">
+  <h2>Please add the notes here...</h2>
   <input type="text" [(ngModel)]="title" placeholder="Note Title" />
   <textarea [(ngModel)]="content" placeholder="Your note..."></textarea>
   <button (click)="saveNote()">
@@ -7,10 +8,6 @@
 </div>
 
 <div class="notes-list">
-  <app-note 
-    *ngFor="let note of notes" 
-    [note]="note" 
-    (onEdit)="editNote($event)" 
-    (onDelete)="deleteNote($event)">
+  <app-note *ngFor="let note of notes" [note]="note" (onEdit)="editNote($event)" (onDelete)="deleteNote($event)">
   </app-note>
 </div>
