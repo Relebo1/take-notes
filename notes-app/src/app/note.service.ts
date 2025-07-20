@@ -1,43 +1,52 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Note } from './note.model';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NoteService {
-  private notes: Note[] = [];
+  private apiUrl: string = 'http://localhost:8080/api/notes'; // Adjust if different
   private notesSubject = new BehaviorSubject<Note[]>([]);
-  notes$ = this.notesSubject.asObservable();
+  public notes$ = this.notesSubject.asObservable();
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  addNote(note: Note): void {
-    note.id = this.generateId();
-    this.notes.push(note);
-    this.updateNotes();
+  getNotes(): void {
+    this.http.get<Note[]>(this.apiUrl)
+      .subscribe(notes => this.notesSubject.next(notes));
   }
 
-  updateNote(note: Note): void {
-    const index = this.notes.findIndex(n => n.id === note.id);
-    if (index !== -1) {
-      this.notes[index] = note;
-      this.updateNotes();
-    }
+  addNote(note: Note): Observable<Note> {
+    return this.http.post<Note>(this.apiUrl, note).pipe(
+      tap(addedNote => {
+        const currentNotes = this.notesSubject.value;
+        this.notesSubject.next([...currentNotes, addedNote]);
+      })
+    );
   }
 
-  deleteNote(id: number): void {
-    this.notes = this.notes.filter(note => note.id !== id);
-    this.updateNotes();
+  updateNote(note: Note): Observable<Note> {
+    return this.http.put<Note>(`${this.apiUrl}/${note.id}`, note).pipe(
+      tap(updatedNote => {
+        const currentNotes = this.notesSubject.value;
+        const index = currentNotes.findIndex(n => n.id === updatedNote.id);
+        if (index !== -1) {
+          currentNotes[index] = updatedNote;
+          this.notesSubject.next([...currentNotes]);
+        }
+      })
+    );
   }
 
-  private updateNotes(): void {
-    this.notesSubject.next([...this.notes]); // emit a copy
-  }
-
-  private generateId(): number {
-    return this.notes.length > 0
-      ? Math.max(...this.notes.map(n => n.id!)) + 1
-      : 1;
+  deleteNote(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => {
+        const currentNotes = this.notesSubject.value.filter(n => n.id !== id);
+        this.notesSubject.next(currentNotes);
+      })
+    );
   }
 }
